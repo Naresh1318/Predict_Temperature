@@ -1,11 +1,15 @@
+"""Predicts the future temperature of a country based on the previous values from the climate change database"""
+
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.cross_validation import train_test_split
-from sklearn.linear_model import LinearRegression
+import argparse
 from tpot import TPOTRegressor
 
-Country = 'India'
+parser = argparse.ArgumentParser()
+parser.add_argument("--country", help="Enter the name of the country \n Ex : United States, India, France...")
+parser.add_argument("--year", help="Year for which to predict the temperature \n Ex : 2100, 2000...")
+args = parser.parse_args()
+Country = args.country
 
 # Import the Climate change dataset
 GlobalTemp_df = pd.read_csv("GlobalLandTemperaturesByCountry.csv")
@@ -50,8 +54,14 @@ year = np.array(IndianTemp_avg['dt'])
 year = year.reshape(len(year), 1)
 Avg_Temp = np.array(IndianTemp_avg['AverageTemperature'])
 Avg_Temp = Avg_Temp.reshape(len(Avg_Temp), 1)
-lr = LinearRegression()
-lr.fit(year, Avg_Temp)
+tp = TPOTRegressor(generations=1, verbosity=2)
+tp.fit(year, Avg_Temp)
 
-# Predict the temperature
-print lr.predict([2100])
+# Year to predict the temperature
+years = np.array([int(args.year)])
+years = years.reshape(len(years), 1)
+temp_pred = tp.predict(years)
+print "The average temperature for the year %s is %f" % (args.year, temp_pred)
+
+# Save the model with tuned hyperparameters
+tp.export('tp_pipeline.py')
