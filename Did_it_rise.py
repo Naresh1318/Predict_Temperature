@@ -54,14 +54,14 @@ year = np.array(IndianTemp_avg['dt'])
 year = year.reshape(len(year), 1)
 Avg_Temp = np.array(IndianTemp_avg['AverageTemperature'])
 Avg_Temp = Avg_Temp.reshape(len(Avg_Temp), 1)
-tp = TPOTRegressor(generations=1, verbosity=2)
+tp = TPOTRegressor(generations=5, verbosity=2)
 tp.fit(year, Avg_Temp)
 
 # Year to predict the temperature
 years = np.array([int(args.year)])
 years = years.reshape(len(years), 1)
 temp_pred = tp.predict(years)
-print "The average temperature for the year %s is %f" % (args.year, temp_pred)
+print "The average temperature for the year %s is %.2f degree Celsius" % (args.year, temp_pred)
 
 # Save the model with tuned hyperparameters
 tp.export('tp_pipeline.py')
