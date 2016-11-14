@@ -12,4 +12,6 @@ Usage
 
 Use the help command on parsers to get a full discription on the parameters.
 
-``python did_it_rise.py --country India --year 2100``
+``python Did_it_rise.py --country India --year 2100``
+
+This code predicts the temperature of the country specified in the year passed as the parameter.
