@@ -10,8 +10,8 @@ Dependencies
 Usage
 ===========
 
-Use the help command on parsers to get a full discription on the parameters.
+Use the help command on parsers to get a full discription of the parameters.
 
 ``python Did_it_rise.py --country India --year 2100``
 
-This code predicts the temperature of the country specified in the year passed as the parameter.
+This code predicts the temperature of the country in the year passed as the parameter.
